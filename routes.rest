@@ -1,0 +1,9 @@
+### Get Tooele Tech Route
+GET http://localhost:3001/ttech HTTP/1.1
+
+
+### Get the root Path / 
+GET http://localhost:3001/ HTTP/1.1
+
+### Get all students
+GET http://localhost:3001/students HTTP/1.1
