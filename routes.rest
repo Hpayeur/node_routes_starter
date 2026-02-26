@@ -6,7 +6,7 @@ GET http://localhost:3001/ttech HTTP/1.1
 GET http://localhost:3001/ HTTP/1.1
 
 ### Get all students
-GET http://localhost:3001/students HTTP/1.1
+GET http://localhost:3001/students 
 
 ### get one student
 GET http://localhost:3001/students/63cedeaec646a3777ac82747
