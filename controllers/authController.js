@@ -103,4 +103,11 @@ const generateToken = (user) => {
     { expiresIn: "1h" },
   );
 };
-module.exports = { home, register, login, logout, protected, generateToken };
+module.exports = {
+  home,
+  register,
+  login,
+  logout,
+  protected: protectedRoute,
+  generateToken,
+};
