@@ -6,4 +6,7 @@ routes.get("/ttech", myController.getAllStudents);
 // Student routes
 routes.use("/students", require("./students"));
 
+// auth routes
+routes.use("/auth", require("./auth"));
+
 module.exports = routes;
