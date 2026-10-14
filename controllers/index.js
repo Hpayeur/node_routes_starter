@@ -55,6 +55,7 @@ const createStudent = async (req, res) => {
       .db()
       .collection("students")
       .insertOne(student);
+    console.log(response);
     if (response.acknowledged) {
       res.status(201).json(response);
     } else {
