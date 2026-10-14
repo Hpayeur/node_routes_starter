@@ -9,6 +9,118 @@ const tooeleTechFunction = (Req, res) => {
   res.send("Tooele Tech is Awesome!");
 };
 
+const getAllClasses = async (req, res) => {
+  try {
+    const result = await mongodb.getDb().db().collection("classes").find();
+    result.toArray().then((lists) => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).json(lists);
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+//Get single contact
+const getSingleClass = async (req, res) => {
+  try {
+    const userId = new ObjectId(req.params.id);
+    const result = await mongodb
+      .getDb()
+      .db()
+      .collection("classes")
+      .find({ _id: userId });
+    result.toArray().then((lists) => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).json(lists[0]);
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+//Create Contact
+const createClass = async (req, res) => {
+  try {
+    const major = {
+      className: req.body.className,
+      teacherName: req.body.teacherName,
+      majorclass: req.body.majorclass,
+      year: req.body.year,
+    };
+
+    const response = await mongodb
+      .getDb()
+      .db()
+      .collection("classes")
+      .insertOne(major);
+    console.log(response);
+    if (response.acknowledged) {
+      res.status(201).json(response);
+    } else {
+      res
+        .status(500)
+        .json(
+          response.error || "Some error occurred while creating the class.",
+        );
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+// update one student
+const updateClass = async (req, res) => {
+  try {
+    const userId = new ObjectId(req.params.id);
+    const major = {
+      className: req.body.className,
+      teacherName: req.body.teacherName,
+      majorclass: req.body.majorclass,
+      year: req.body.year,
+    };
+
+    const response = await mongodb
+      .getDb()
+      .db()
+      .collection("classes")
+      .replaceOne({ _id: userId }, major);
+    if (response.acknowledged) {
+      res.status(204).json(response);
+    } else {
+      (res,
+        status(500).json(
+          response.error || "Some error occurred while updating the class.",
+        ));
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+// delete one student
+const deleteClass = async (req, res) => {
+  try {
+    const userId = new ObjectId(req.params.id);
+    const response = await mongodb
+      .getDb()
+      .db()
+      .collection("classes")
+      .deleteOne({ _id: userId }, true);
+    console.log(response);
+    if (response.acknowledged) {
+      res.status(200).send(response);
+    } else {
+      res
+        .status(500)
+        .json(
+          response.error || "Some error occurred while deleting the major.",
+        );
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 const getAllStudents = async (req, res) => {
   try {
     const result = await mongodb.getDb().db().collection("students").find();
@@ -131,4 +243,9 @@ module.exports = {
   createStudent,
   updateStudent,
   deleteStudent,
+  getAllClasses,
+  getSingleClass,
+  createClass,
+  updateClass,
+  deleteClass,
 };
